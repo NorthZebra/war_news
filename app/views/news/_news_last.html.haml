@@ -12,7 +12,8 @@
       .image
         - if news.image.exists?
           = image_tag news.image.url
-      %p.body-news= auto_link(news.news_body, :html => { :target => '_blank' })  
+      %p.body-news= auto_link(news.news_body, :html => { :target => '_blank' }) 
+
   
   %p.lead Recent Comments
   - @comment_last.each do |comment|
