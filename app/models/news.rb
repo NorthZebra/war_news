@@ -1,8 +1,9 @@
 class News < ActiveRecord::Base
+  require "open-uri"
+  
   acts_as_votable
   has_many :comments
   
-  require "open-uri"
   has_many :images
   attr_reader :image_from_url
   has_attached_file :image, styles: { medium: "700x500>", thumb: "200x200>" }, default_url: "/images/:style/missing.png"
