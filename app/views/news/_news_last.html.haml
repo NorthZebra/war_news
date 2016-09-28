@@ -1,0 +1,28 @@
+.related-articles
+  %p.lead Latest News
+  - @news_last.each do |news|
+    %ul
+    .news-last
+      %h3.time
+        - if news.created_at < Time.now - 24.hours
+          = news.news_date.strftime("%d %B %Y")
+        - else
+          = time_ago_in_words(news.created_at, include_seconds: true)
+          ago 
+      .image
+        - if news.image.exists?
+          = image_tag news.image.url
+      %p.body-news= auto_link(news.news_body, :html => { :target => '_blank' })  
+  
+  %p.lead Recent Comments
+  - @comment_last.each do |comment|
+    .comments-last
+      %h4= comment.body
+      %p
+        %small
+          Submitted
+          %strong
+            = time_ago_in_words(comment.created_at)
+            ago
+          by #{comment.user.name}
+          

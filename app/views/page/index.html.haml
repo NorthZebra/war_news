@@ -1,0 +1,41 @@
+#main-content
+- @news.each do |news|
+  %ul.content
+    %li
+      %h3.time
+        - if news.created_at < Time.now - 24.hours
+          = news.news_date.strftime("%d %B %Y")
+        - else
+          = time_ago_in_words(news.created_at, include_seconds: true)
+          ago 
+      .image
+        - if news.image.exists?
+          = image_tag news.image.url
+      %p.body-news= auto_link(news.news_body, :html => { :target => '_blank' })
+      = link_to like_news_path(news), class: "like", method: :put do
+        %button.btn.btn-info.btn-xs{"aria-label" => "Left Align", :type => "button"}
+          %span.glyphicon.glyphicon-thumbs-up.glyphicon-align-center{"aria-hidden" => "true"}
+          %span.badge= news.get_upvotes.size
+      = link_to dislike_news_path(news), class: "like", method: :put do
+        %button.btn.btn-info.btn-xs{"aria-label" => "Left Align", :type => "button"}
+          %span.glyphicon.glyphicon-thumbs-down.glyphicon-align-center{"aria-hidden" => "true"}
+          %span.badge= news.get_downvotes.size
+      
+      %h4.comments_title
+        = news.comments.count
+        Comments
+      #comments
+        = render :partial => news.comments
+      - if user_signed_in?
+        = simple_form_for [news, Comment.new]  do |f|
+          .field
+            = f.text_area :body, class: "form-control"
+          %br= f.submit "Add Comment", class: "btn btn-primary"
+      .share-button= social_share_button_tag(news.news_body)
+
+.flickr_pagination
+  = will_paginate @news
+
+- content_for(:side_bar) do
+  = render :partial => "news/news_last"
+

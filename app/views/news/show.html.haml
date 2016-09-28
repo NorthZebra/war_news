@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b News date:
+  = @news.news_date
+%p
+  %b News body:
+  = @news.news_body
+%p
+  %b News image:
+  = image_tag @news.image.url(:thumb)
+
+= link_to 'Edit', edit_news_path(@news)
+\|
+= link_to 'Back', news_index_path

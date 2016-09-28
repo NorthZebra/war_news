@@ -1,0 +1,29 @@
+= form_for @news, :html => { :class => 'form-horizontal', multipart: true } do |f|
+  - if @news.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@news.errors.count, "error")} prohibited this news from being saved:"
+      %ul
+        - @news.errors.full_messages.each do |msg|
+          %li= msg
+
+  .control-group
+    = f.label :news_date, :class => 'control-label'
+    .controls
+      = f.date_select :news_date, :class => 'date_select'
+  .control-group
+    = f.label :tweet_id, :class => 'control-label'
+    .controls
+      = f.text_area :tweet_id, :class => 'text_area'
+  .control-group
+    = f.label :news_body, :class => 'control-label'
+    .controls
+      = f.text_area :news_body, :class => 'text_area'
+  .control-group
+    = f.label :image, :class => 'control-label'
+    .controls
+      = file_field_tag "images[]", type: :file, multiple: true
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), |
+      news_index_path, :class => 'btn btn-mini'                     |
+

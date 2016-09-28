@@ -1,0 +1,21 @@
+require 'twitter'
+
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = "gBWlVFR3Fd4bIjF0gZtu3brrC"
+      config.consumer_secret     = "eMmGsjC0B5NAIINRrBpG9R7pzCE66JHGZ72uxYJUALbUZoPE6U"
+      config.access_token        = "118439351-E600Vej0IwirCaiITcczO2YNdSzVUb6z5ykXZVXO"
+      config.access_token_secret = "eWaotmQW60BEj6B2G4X5PKyKYIj4mVFtwLmemrgJo5vsc" 
+
+     end
+
+
+
+    def client.get_all_tweets(user)
+        options = {:count => 5, :include_rts => true}
+          user_timeline(user, options)
+    end
+
+
+    @tweet_news = client.get_all_tweets("Conflicts")
+
+    
