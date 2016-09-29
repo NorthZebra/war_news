@@ -10,7 +10,7 @@
           ago 
       .image
         - if news.image.exists?
-          = image_tag news.image.url
+          = image_tag news.image.url(:medium)
       %p.body-news= auto_link(news.news_body, :html => { :target => '_blank' })
       = link_to like_news_path(news), class: "like", method: :put do
         %button.btn.btn-info.btn-xs{"aria-label" => "Left Align", :type => "button"}
